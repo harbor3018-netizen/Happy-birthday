@@ -1,0 +1,1209 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>For Rajat 💜</title>
+
+
+    <!-- Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        /* ==========================================
+           RESET
+        ========================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        body {
+            font-family: "Poppins", sans-serif;
+            overflow: hidden;
+        }
+
+
+
+        /* ==========================================
+           LOCK SCREEN
+        ========================================== */
+
+        #lockScreen {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 10;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(108, 76, 145, 0.35),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(76, 45, 100, 0.35),
+                    transparent 30%
+                ),
+                #09070d;
+
+            color: white;
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+
+        #lockScreen.hide {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+
+        /* Stars */
+
+        .stars {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,0.7) 1px,
+                    transparent 1px
+                );
+
+            background-size: 70px 70px;
+
+            opacity: 0.15;
+
+            animation:
+                starsMove 20s linear infinite;
+        }
+
+
+
+        /* ==========================================
+           LOCK CARD
+        ========================================== */
+
+        .lock-card {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(100%, 370px);
+
+            padding: 45px 28px;
+
+            text-align: center;
+
+            border-radius: 30px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.5);
+
+            animation:
+                cardAppear 1s ease;
+        }
+
+
+        .tiny-star {
+
+            font-size: 24px;
+
+            color: #dccaff;
+
+            margin-bottom: 14px;
+        }
+
+
+        .lock-subtitle {
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            color: #a99db3;
+        }
+
+
+        .lock-card h1 {
+
+            margin-top: 7px;
+
+            font-family:
+                "DM Serif Display",
+                serif;
+
+            font-size: 45px;
+
+            font-weight: 400;
+        }
+
+
+        .lock-hint {
+
+            margin-top: 8px;
+
+            font-size: 13px;
+
+            color: #aaa0b1;
+        }
+
+
+
+        /* ==========================================
+           PASSCODE INPUT
+        ========================================== */
+
+        .pass-wrapper {
+
+            width: 100%;
+
+            margin-top: 28px;
+        }
+
+
+        #passInput {
+
+            width: 100%;
+
+            height: 55px;
+
+            padding: 0 20px;
+
+            border-radius: 17px;
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            color: white;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size: 18px;
+
+            text-align: center;
+
+            transition: 0.3s ease;
+        }
+
+
+        #passInput:focus {
+
+            border-color:
+                rgba(216,194,255,0.6);
+
+            box-shadow:
+                0 0 25px
+                rgba(216,194,255,0.12);
+        }
+
+
+        #passInput::placeholder {
+
+            color: #82778c;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+        }
+
+
+
+        /* ==========================================
+           ERROR MESSAGE
+        ========================================== */
+
+        #error {
+
+            height: 20px;
+
+            margin-top: 12px;
+
+            font-size: 11px;
+
+            color: #d9c3ff;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+
+        #error.show {
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+
+        /* ==========================================
+           BIRTHDAY SCREEN
+        ========================================== */
+
+        #birthdayScreen {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    #eee4ff 0%,
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 90% 85%,
+                    #ded0ef 0%,
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f5f0fa
+                );
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 1.3s ease,
+                visibility 1.3s ease;
+
+            overflow: hidden;
+        }
+
+
+        #birthdayScreen.show {
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+
+        /* ==========================================
+           DREAMY GLOW
+        ========================================== */
+
+        .glow {
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: 0.35;
+
+            pointer-events: none;
+        }
+
+
+        .glow-one {
+
+            top: -120px;
+
+            left: -100px;
+
+            background: #d7c0f2;
+        }
+
+
+        .glow-two {
+
+            right: -120px;
+
+            bottom: -120px;
+
+            background: #e8dcf6;
+        }
+
+
+
+        /* ==========================================
+           FLOATING DECORATIONS
+        ========================================== */
+
+        .floating {
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+        }
+
+
+        .floating span {
+
+            position: absolute;
+
+            color: #aa91c1;
+
+            opacity: 0.35;
+
+            animation:
+                floating 6s ease-in-out infinite;
+        }
+
+
+        .floating span:nth-child(1) {
+
+            top: 14%;
+
+            left: 12%;
+
+            font-size: 20px;
+        }
+
+
+        .floating span:nth-child(2) {
+
+            top: 20%;
+
+            right: 13%;
+
+            font-size: 17px;
+
+            animation-delay: 1s;
+        }
+
+
+        .floating span:nth-child(3) {
+
+            bottom: 17%;
+
+            left: 16%;
+
+            font-size: 15px;
+
+            animation-delay: 2s;
+        }
+
+
+        .floating span:nth-child(4) {
+
+            right: 13%;
+
+            bottom: 19%;
+
+            font-size: 23px;
+
+            animation-delay: 3s;
+        }
+
+
+        .floating span:nth-child(5) {
+
+            top: 9%;
+
+            left: 48%;
+
+            font-size: 13px;
+
+            animation-delay: 4s;
+        }
+
+
+
+        /* ==========================================
+           BIRTHDAY CARD
+        ========================================== */
+
+        .birthday-card {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(100%, 650px);
+
+            padding: 55px 32px;
+
+            text-align: center;
+
+            border-radius: 32px;
+
+            background:
+                rgba(255,255,255,0.72);
+
+            border:
+                1px solid
+                rgba(117,91,140,0.1);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 30px 90px
+                rgba(78,54,100,0.12);
+
+            animation:
+                birthdayAppear 1.5s ease;
+        }
+
+
+        .eyebrow {
+
+            margin-bottom: 16px;
+
+            color: #9279a7;
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+        }
+
+
+        .birthday-card h2 {
+
+            font-family:
+                "DM Serif Display",
+                serif;
+
+            font-size:
+                clamp(34px, 8vw, 55px);
+
+            font-weight: 400;
+
+            line-height: 1.1;
+
+            color: #3d2d49;
+        }
+
+
+        .birthday-card h1 {
+
+            margin-top: 2px;
+
+            font-family:
+                "DM Serif Display",
+                serif;
+
+            font-size:
+                clamp(55px, 12vw, 80px);
+
+            font-style: italic;
+
+            font-weight: 400;
+
+            line-height: 1.05;
+
+            color: #8062a0;
+        }
+
+
+
+        /* Divider */
+
+        .divider {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 22px 0;
+        }
+
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            width: 60px;
+
+            height: 1px;
+
+            background: #d7c9df;
+        }
+
+
+        .divider span {
+
+            color: #a487bd;
+        }
+
+
+
+        /* Message */
+
+        .birthday-message {
+
+            max-width: 500px;
+
+            margin: auto;
+
+            color: #66566f;
+
+            font-size: 14px;
+
+            line-height: 1.9;
+        }
+
+
+        /* Cake */
+
+        .cake {
+
+            margin-top: 25px;
+
+            font-size: 42px;
+
+            animation:
+                cakeFloat 3s ease-in-out infinite;
+        }
+
+
+        .bottom-line {
+
+            margin-top: 15px;
+
+            color: #9a8da1;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+
+        /* ==========================================
+           ANIMATIONS
+        ========================================== */
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes birthdayAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(30px)
+                    scale(0.97);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        @keyframes cakeFloat {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+
+                transform:
+                    translateY(-8px);
+            }
+        }
+
+
+        @keyframes floating {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+
+                transform:
+                    translateY(-14px)
+                    rotate(8deg);
+            }
+        }
+
+
+        @keyframes starsMove {
+
+            from {
+
+                transform:
+                    translateY(0);
+            }
+
+            to {
+
+                transform:
+                    translateY(-70px);
+            }
+        }
+
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 500px) {
+
+            .lock-card {
+
+                padding:
+                    40px 22px;
+            }
+
+
+            .lock-card h1 {
+
+                font-size: 40px;
+            }
+
+
+            .birthday-card {
+
+                padding:
+                    42px 22px;
+
+                border-radius:
+                    26px;
+            }
+
+
+            .birthday-message {
+
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         PASSCODE SCREEN
+    ========================================== -->
+
+    <section id="lockScreen">
+
+        <div class="stars"></div>
+
+
+        <div class="lock-card">
+
+            <div class="tiny-star">
+                ✦
+            </div>
+
+
+            <p class="lock-subtitle">
+                A little surprise awaits
+            </p>
+
+
+            <h1>
+                For Rajat
+            </h1>
+
+
+            <p class="lock-hint">
+                Enter the secret pass
+            </p>
+
+
+            <div class="pass-wrapper">
+
+                <input
+                    id="passInput"
+                    type="text"
+                    placeholder="Enter passcode"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
+
+            </div>
+
+
+            <!--
+                IMPORTANT:
+                This starts hidden.
+                It only appears after a wrong password.
+            -->
+
+            <p id="error">
+                Not quite... try again 💭
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         BIRTHDAY SCREEN
+    ========================================== -->
+
+    <section id="birthdayScreen">
+
+
+        <div class="glow glow-one"></div>
+
+        <div class="glow glow-two"></div>
+
+
+        <div class="floating">
+
+            <span>✦</span>
+
+            <span>♡</span>
+
+            <span>✧</span>
+
+            <span>🎈</span>
+
+            <span>✦</span>
+
+        </div>
+
+
+        <div class="birthday-card">
+
+
+            <p class="eyebrow">
+                A little something for you
+            </p>
+
+
+            <h2>
+                Happy Birthday,
+            </h2>
+
+
+            <h1>
+                Rajat
+            </h1>
+
+
+            <div class="divider">
+
+                <span>✦</span>
+
+            </div>
+
+
+            <p class="birthday-message">
+            <h>
+                Happy Birthday Yarr Rajat ! 
+            </h>
+
+Tere jaisa insaan zindagi me baar baar nahi milta. Tujme me ek alag hi baat hai, ek sukoon hai, ek apnapan hai jo sab me nahi hota. Jis din se tu meri life me aaya h sab kuch thoda zyada khoobsurat lagne laga hai.
+
+Main hamesha dua karungi ki teri saari wishes puri ho, tu hamesha khush  rahe , aur tuje wo sab mile jo jo tu apni life Mai chahata h  Tuje duniya ki saari khushiyan mile 
+
+Thank you for coming in my life I'm so grateful to have you in my life 
+
+Once again, Happiest Birthday to the most special person. Stay blessed, stay you. You matter a lot to me!
+
+                <br>
+                <br>
+
+            </p>
+
+
+            <div class="cake">
+                🎂
+            </div>
+
+
+            <p class="bottom-line">
+
+                And here a new chapter of your life begin. ✨
+
+            </p>
+
+
+        </div>
+
+
+        <!--
+            Put song.mp3 in the same folder
+            as this HTML file.
+        -->
+
+        <audio
+            id="birthdayMusic"
+            loop
+        >
+
+            <source
+                src="song.mp3"
+                type="audio/mpeg"
+            >
+
+        </audio>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        /* ==========================================
+           SETTINGS
+        ========================================== */
+
+        const CORRECT_PASSWORD = "⚫";
+
+
+        /* ==========================================
+           ELEMENTS
+        ========================================== */
+
+        const passInput =
+            document.getElementById("passInput");
+
+        const lockScreen =
+            document.getElementById("lockScreen");
+
+        const birthdayScreen =
+            document.getElementById("birthdayScreen");
+
+        const birthdayMusic =
+            document.getElementById("birthdayMusic");
+
+        const error =
+            document.getElementById("error");
+
+
+
+        /* ==========================================
+           PASSWORD CHECK
+        ========================================== */
+
+        passInput.addEventListener(
+            "input",
+            function () {
+
+                const enteredPassword =
+                    passInput.value;
+
+
+                /*
+                    Hide error while typing again.
+                */
+
+                error.classList.remove("show");
+
+
+                /*
+                    CORRECT PASSWORD
+                */
+
+                if (
+                    enteredPassword ===
+                    CORRECT_PASSWORD
+                ) {
+
+                    unlockBirthday();
+
+                    return;
+                }
+
+
+                /*
+                    WRONG PASSWORD
+
+                    Since the correct password
+                    is only one character, any
+                    other character is wrong.
+                */
+
+                if (
+                    enteredPassword.length > 0
+                ) {
+
+                    showWrongPassword();
+
+                }
+
+            }
+        );
+
+
+
+        /* ==========================================
+           WRONG PASSWORD
+        ========================================== */
+
+        function showWrongPassword() {
+
+            error.classList.add("show");
+
+
+            /*
+                Shake card
+            */
+
+            const card =
+                document.querySelector(".lock-card");
+
+
+            card.animate(
+
+                [
+                    {
+                        transform:
+                            "translateX(0)"
+                    },
+
+                    {
+                        transform:
+                            "translateX(-7px)"
+                    },
+
+                    {
+                        transform:
+                            "translateX(7px)"
+                    },
+
+                    {
+                        transform:
+                            "translateX(-4px)"
+                    },
+
+                    {
+                        transform:
+                            "translateX(0)"
+                    }
+
+                ],
+
+                {
+                    duration: 300
+                }
+
+            );
+
+
+            /*
+                Clear after a moment
+            */
+
+            setTimeout(
+                function () {
+
+                    passInput.value = "";
+
+                    error.classList.remove(
+                        "show"
+                    );
+
+                },
+                700
+            );
+
+        }
+
+
+
+        /* ==========================================
+           UNLOCK
+        ========================================== */
+
+        function unlockBirthday() {
+
+            /*
+                Prevent more typing
+            */
+
+            passInput.disabled = true;
+
+
+            /*
+                Fade out lock screen
+            */
+
+            lockScreen.classList.add(
+                "hide"
+            );
+
+
+            /*
+                Show birthday screen
+            */
+
+            setTimeout(
+                function () {
+
+                    birthdayScreen.classList.add(
+                        "show"
+                    );
+
+
+                    /*
+                        Start music
+                    */
+
+                    birthdayMusic.volume = 0.35;
+
+
+                    birthdayMusic.play().catch(
+                        function () {
+
+                            console.log(
+                                "Music autoplay was blocked."
+                            );
+
+                        }
+                    );
+
+                },
+                800
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```
